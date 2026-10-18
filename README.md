@@ -1,0 +1,2 @@
+# CampusPilot-AI
+CampusPilot AI
