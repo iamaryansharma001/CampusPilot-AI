@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 
 dotenv.config();
 
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-flash-latest';
+const GEMINI_MODEL = 'gemini-3.8-flash';
 
 interface UploadedGeminiFile {
   name: string;

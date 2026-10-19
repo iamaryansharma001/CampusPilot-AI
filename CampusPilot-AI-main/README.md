@@ -1,109 +1,95 @@
 # CampusPilot AI 🎓
 
-### Turn campus circulars into clear checklists and deadlines.
+### Smarter College Discovery. Better-Informed Decisions.
 
-CampusPilot AI is an academic action center for students. Paste or upload a campus notice (an exam circular, workshop announcement, fee notice) and it extracts the event, venue, deadline, fees, and a step-by-step checklist of what you need to do. Save those steps to a personal task list, track what is urgent, and export deadlines to your calendar.
+CampusPilot AI is a student-focused platform designed to simplify college discovery and help students explore engineering colleges, compare available options, and make more informed admission decisions.
 
-Built for **GitHub Copilot Dev Days — OSEN Noida 2026**.
+Built as a project for **GitHub Copilot Dev Days — OSEN Noida 2026**, the project explores how modern web development tools and AI-assisted workflows can help create practical solutions to real student problems.
 
 ## ✨ Key Features
 
-- **Notice Analyzer:** Extracts event, venue, deadline, fees, issuing department, and action items from a notice. A built-in local rule engine works offline; Gemini can be enabled for higher-quality extraction.
-- **Gemini-Powered Parsing:** Handles PDF and image notices (PNG, JPG, WEBP) through a server-side Gemini call. Fields not present in the notice are reported as "Not stated" rather than guessed.
-- **Action Center:** Save extracted steps as tasks, mark them urgent or complete, add your own tasks, and clear finished ones.
-- **Circulars & Archive:** Keep parsed notices and re-open the original notice text.
-- **Notifications:** A drawer of campus alerts with unread and urgent states.
-- **Calendar Export:** Download your deadlines as an `.ics` file for Google Calendar, Outlook, or Apple Calendar.
-- **Local Persistence:** Tasks, notices, and alerts are stored in your browser's `localStorage`.
+- **College Discovery:** Explore engineering college options in one place.
+- **College Comparison:** Evaluate different institutions using relevant information.
+- **Admission Guidance:** Help students understand their options and make informed choices.
+- **Student-Friendly Interface:** Designed to make college research more accessible.
+- **AI-Assisted Experience:** Intelligent assistance for college-related queries, if implemented in the current version.
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-| --- | --- |
-| Frontend | React 19, TypeScript, Vite |
-| Styling | Tailwind CSS 4, Motion (animations), Lucide React (icons) |
-| Backend | Node.js, Express 4, run with `tsx` |
-| AI | Google Gemini via `@google/genai` (server-side only) |
-| File handling | `fflate` for reading `.docx` uploads |
-| Config | `dotenv` |
-| Dev tools | Visual Studio Code, GitHub Copilot |
-
-The Vite dev server runs as middleware inside the Express server, so one command starts both the app and the API.
+- **Frontend:** Add the framework or technologies actually used in this repository.
+- **Language:** JavaScript / TypeScript, as applicable.
+- **Development Environment:** Visual Studio Code.
+- **AI-Assisted Development:** GitHub Copilot.
+- **AI Services:** Document the actual provider or model used, if applicable.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (current LTS, 22 or newer recommended)
+- [Node.js](https://nodejs.org/)
 - npm (included with Node.js)
 
 ### Installation
 
-1. Clone the repository and move into it:
+1. Clone the repository:
 
    ```bash
    git clone <YOUR_GITHUB_REPOSITORY_URL>
+   ```
+
+2. Move into the project directory:
+
+   ```bash
    cd CampusPilot-AI
    ```
 
-2. Install dependencies:
+3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. (Optional) Enable Gemini parsing. Create a key in [Google AI Studio](https://aistudio.google.com/apikey), copy `.env.example` to `.env`, and set your key:
+4. To enable Gemini notice parsing, create a Gemini API key in [Google AI Studio](https://aistudio.google.com/apikey), then create a `.env` file in the project root and add your key:
 
    ```env
    GEMINI_API_KEY=paste_your_key_here
    ```
 
-   Keep the key private. Never commit it or put it in frontend code; `.env` is listed in `.gitignore`. Without a key, the app still runs and PDF/image analysis returns a "not configured" message.
+   Keep the key private: do not paste it into chat, commit it to GitHub, or put it in frontend code. The `.env` file is ignored by Git. If the app is deployed to a hosting provider, add `GEMINI_API_KEY` to that provider's environment-variable/secrets settings and redeploy; a local `.env` file only applies to your local server.
 
-4. Start the development server:
+   Gemini-powered PDF and image uploads are sent to the app's Node server. The deployment must run `server.ts` (or an equivalent backend), not serve the built files as a static-only site, and the key must be configured on that server.
+
+### Notice uploads
+
+- Text files (`.txt`, `.md`) and Word documents (`.docx`) are read as text before extraction.
+- PDF and image files (`.pdf`, `.png`, `.jpg`, `.jpeg`, `.webp`) require Gemini mode and are sent to the Node server for analysis.
+- Uploads are limited to 8 MB. Legacy `.doc` files are not supported; save them as `.docx` or PDF first.
+
+5. Start the development server:
 
    ```bash
    npm run dev
    ```
 
-5. Open <http://localhost:3000>.
+6. Open the local URL shown in your terminal.
 
-## 📎 Notice Uploads
+## 💻 Development Workflow
 
-- Text (`.txt`, `.md`) and Word (`.docx`) files are read in the browser as text.
-- PDF and image files (`.pdf`, `.png`, `.jpg`, `.jpeg`, `.webp`) are sent to the Node server and analyzed by Gemini, so they need `GEMINI_API_KEY`.
-- Uploads are limited to 8 MB. Legacy `.doc` files are not supported; save them as `.docx` or PDF first.
-
-## 📦 Scripts
-
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Starts the Express server with the Vite dev server (port 3000) |
-| `npm run build` | Builds the frontend into `dist/` |
-| `npm start` | Runs the server; set `NODE_ENV=production` to serve `dist/` (port from `PORT`, default 8080) |
-| `npm run lint` | Type-checks the project with `tsc --noEmit` |
-| `npm run clean` | Removes `dist/` and `server.js` |
-
-## ☁️ Deployment
-
-Deploy it as a Node service, not a static site, because the Gemini calls run in `server.ts`.
-
-1. `npm install && npm run build`
-2. Set `NODE_ENV=production` and `GEMINI_API_KEY` in your host's environment or secrets settings.
-3. Start with `npm start`.
-
-A local `.env` file only applies to your own machine, so add the key on the host and redeploy.
+GitHub Copilot supports the development workflow for coding, debugging, and iterative refinement. The project is developed and improved through implementation, testing, and feedback.
 
 ## 🎯 Project Objective
 
-College notices are scattered, long, and easy to misread. CampusPilot AI turns them into short, trustworthy checklists with the deadlines that matter, so students spend less time decoding circulars and miss fewer deadlines.
+Choosing an engineering college can involve comparing institutions, understanding admission possibilities, and navigating information from different sources.
+
+CampusPilot AI aims to make this process easier by bringing useful college-related information and decision-support features into a student-focused platform.
 
 ## 🔮 Future Improvements
 
-- Parse real deadline dates so calendar events use the actual due date.
-- Add more notice presets and department-specific rules.
-- Sync tasks across devices with a backend database.
-- Improve accessibility and responsive design.
+- Expand the available college information.
+- Improve college comparison and filtering.
+- Enhance accessibility and responsive design.
+- Make admission-related information clearer and easier to verify.
+- Extend AI-powered assistance, where appropriate.
 
 ## 👨‍💻 Author
 
@@ -113,4 +99,4 @@ Galgotias College of Engineering and Technology
 
 ## 📄 License
 
-Released under the [MIT License](LICENSE).
+No license has been specified yet. Add a `LICENSE` file if you intend to distribute this project under a particular open-source license.
